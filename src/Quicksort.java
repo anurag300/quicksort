@@ -36,12 +36,11 @@ public class Quicksort {
 		}
 		
 		int midpoint = (lo+hi) >>> 1; // The midpoint
-		if (A[lo] > A[midpoint]) 
-			swap(A, lo, midpoint);
-		if (A[midpoint] > A[hi]) 
-			swap(A, midpoint, hi);
-		if (A[lo] > A[midpoint]) 
-			swap(A, lo, midpoint);
+		// insertion sort lo,mid,hi elements
+		if (A[midpoint] < A[lo]) { int t = A[midpoint]; A[midpoint] = A[lo]; A[lo] = t; }
+        if (A[hi] < A[midpoint]) { int t = A[hi]; A[hi] = A[midpoint]; A[midpoint] = t;
+            if (t < A[lo]) { A[midpoint] = A[lo]; A[lo] = t; }
+        }
 		
 		int p = A[lo];
 		int q = A[midpoint];
@@ -103,7 +102,7 @@ public class Quicksort {
 		quicksort3PivotBasic(A, c, d-1);
 		quicksort3PivotBasic(A, d+1, hi);
 	}
-
+	
 	private static void swap(int[] a, int a2, int b) {
 		int temp = a[a2];
 		a[a2] = a[b];
@@ -128,9 +127,8 @@ public class Quicksort {
 		}
 		
 		long start = System.currentTimeMillis();
-		//quicksort3PivotBasic(a, 0, a.length - 1);
-		Arrays.sort(a); // uncomment to compare against your JDK
-		//quicksort(a, 0, a.length-1);
+		quicksort3PivotBasic(a, 0, a.length - 1);
+		//Arrays.sort(a); // uncomment to compare against your JDK
 		long stop = System.currentTimeMillis();
 		System.out.println((stop-start) + "ms to sort " + a.length + " elements. Is sorted? " + isSorted(a, 0, a.length-1));
 	}
