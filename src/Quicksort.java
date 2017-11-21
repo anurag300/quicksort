@@ -249,16 +249,17 @@ public class Quicksort {
     public static void main(String[] args) {
 	Random r = new Random();
 	r.setSeed(0L);
-	int[] a = new int[100000000];
-	for (int i = 0; i < 100000000; i++) {
+	int[] a = new int[10000000];
+	for (int i = 0; i < 10000000; i++) {
 	    a[i] = r.nextInt();
 	}
 
 	long start = System.currentTimeMillis();
 	//quicksort3PivotBasic(a, 0, a.length - 1);
-	quicksort3Pivot(a, 0, a.length - 1);
-	//Arrays.sort(a); // uncomment to compare against your JDK
+	//quicksort3Pivot(a, 0, a.length - 1);
+	Arrays.sort(a); // uncomment to compare against your JDK
 	long stop = System.currentTimeMillis();
-	System.out.println((stop - start) + "ms to sort " + a.length + " elements. Is sorted? " + isSorted(a, 0, a.length - 1));
+	java.text.NumberFormat f = java.text.NumberFormat.getNumberInstance(java.util.Locale.US);
+	System.out.println((stop - start) + "ms to sort " + f.format(a.length) + " elements. Is sorted? " + isSorted(a, 0, a.length - 1));
     }
 }
