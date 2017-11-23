@@ -109,9 +109,6 @@ public class Quicksort {
      * Choose pivots p,q,r as the 2nd, 4th, & 6th of 7 elements.
      */
     public static void quicksort3Pivot(int[] A, int lo, int hi) {
-	if (hi == lo)
-	    return;
-	
 	int length = hi - lo + 1;
 	if (length < INSERTION_SORT_THRESHOLD) {
 	    insertionsort(A, lo, hi);
@@ -256,8 +253,8 @@ public class Quicksort {
 
 	long start = System.currentTimeMillis();
 	//quicksort3PivotBasic(a, 0, a.length - 1);
-	//quicksort3Pivot(a, 0, a.length - 1);
-	Arrays.sort(a); // uncomment to compare against your JDK
+	quicksort3Pivot(a, 0, a.length - 1);
+	//Arrays.sort(a); // uncomment to compare against your JDK
 	long stop = System.currentTimeMillis();
 	java.text.NumberFormat f = java.text.NumberFormat.getNumberInstance(java.util.Locale.US);
 	System.out.println((stop - start) + "ms to sort " + f.format(a.length) + " elements. Is sorted? " + isSorted(a, 0, a.length - 1));
