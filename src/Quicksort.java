@@ -10,7 +10,7 @@ import java.util.Random;
  * @author David McManamon
  */
 public class Quicksort {
-    private static final int INSERTION_SORT_THRESHOLD = 48;
+    private static final int INSERTION_SORT_THRESHOLD = 47;
 
     private static void insertionsort(int[] a, int lo, int hi) {
 	for (int i = lo + 1; i < hi + 1; i++) {
@@ -28,14 +28,13 @@ public class Quicksort {
      * Naive choice of pivots p,q,r as a[lo], a[midpoint] & a[hi] elements.
      */
     public static void quicksort3PivotBasic(int[] A, int lo, int hi) {
-	if (hi == lo)
-	    return;
-	else if (hi - lo < INSERTION_SORT_THRESHOLD) {
+	int length = hi - lo + 1;
+	if (length < INSERTION_SORT_THRESHOLD) {
 	    insertionsort(A, lo, hi);
 	    return;
 	}
 
-	int midpoint = (lo + hi) >>> 1; // The midpoint
+	int midpoint = (lo + hi) >>> 1;
 	// insertion sort lo,mid,hi elements
 	if (A[midpoint] < A[lo]) { int t = A[midpoint]; A[midpoint] = A[lo]; A[lo] = t; }
         if (A[hi] < A[midpoint]) { int t = A[hi]; A[hi] = A[midpoint]; A[midpoint] = t;
@@ -93,16 +92,15 @@ public class Quicksort {
 	}
 	// swap the pivots to their correct positions
 	a--; b--; c++; d++;
-	swap(A, lo + 1, a);
-	swap(A, a, b);
+	swap(A, lo + 1, a); swap(A, a, b);
 	a--;
 	swap(A, lo, a);
 	swap(A, hi, d);
 
-	quicksort3PivotBasic(A, lo, a - 1);
-	quicksort3PivotBasic(A, a + 1, b);
-	quicksort3PivotBasic(A, c, d - 1);
-	quicksort3PivotBasic(A, d + 1, hi);
+	quicksort3PivotBasic(A, lo, a-1);
+	quicksort3PivotBasic(A, a+1, b-1);
+	quicksort3PivotBasic(A, b+1, d-1);
+	quicksort3PivotBasic(A, d+1, hi);	
     }
 	
     /**
@@ -216,16 +214,15 @@ public class Quicksort {
 	}
 	// swap the pivots to their correct positions
 	a--; b--; c++; d++;
-	swap(A, lo + 1, a);
-	swap(A, a, b);
+	swap(A, lo + 1, a); swap(A, a, b);
 	a--;
 	swap(A, lo, a);
 	swap(A, hi, d);
 
-	quicksort3Pivot(A, lo, a - 1);
-	quicksort3Pivot(A, a + 1, b);
-	quicksort3Pivot(A, c, d - 1);
-	quicksort3Pivot(A, d + 1, hi);	
+	quicksort3Pivot(A, lo, a-1);
+	quicksort3Pivot(A, a+1, b-1);
+	quicksort3Pivot(A, b+1, d-1);
+	quicksort3Pivot(A, d+1, hi);	
     }
 
     private static final void swap(int[] a, int x, int y) {
@@ -252,8 +249,8 @@ public class Quicksort {
 	}
 
 	long start = System.currentTimeMillis();
-	//quicksort3PivotBasic(a, 0, a.length - 1);
-	quicksort3Pivot(a, 0, a.length - 1);
+	quicksort3PivotBasic(a, 0, a.length - 1);
+	//quicksort3Pivot(a, 0, a.length - 1);
 	//Arrays.sort(a); // uncomment to compare against your JDK
 	long stop = System.currentTimeMillis();
 	java.text.NumberFormat f = java.text.NumberFormat.getNumberInstance(java.util.Locale.US);
