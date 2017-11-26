@@ -10,18 +10,14 @@ import java.util.Random;
  * @author David McManamon
  */
 public class Quicksort {
-    private static final int INSERTION_SORT_THRESHOLD = 47;
-
+    private static final int INSERTION_SORT_THRESHOLD = 55;
+    
     private static void insertionsort(int[] a, int lo, int hi) {
-	for (int i = lo + 1; i < hi + 1; i++) {
-	    int valueToSort = a[i];
-	    int j = i;
-	    while (j > 0 && a[j - 1] > valueToSort) {
-		a[j] = a[j - 1];
-		j--;
-	    }
-	    a[j] = valueToSort;
-	}
+	for (int i = lo + 1; i <= hi; i++) {
+            for (int j = i; j > lo && a[j] < a[j - 1]; j--) {
+                swap(a, j, j - 1);
+            }
+        }
     }
 
     /**
@@ -30,7 +26,8 @@ public class Quicksort {
     public static void quicksort3PivotBasic(int[] A, int lo, int hi) {
 	int length = hi - lo + 1;
 	if (length < INSERTION_SORT_THRESHOLD) {
-	    insertionsort(A, lo, hi);
+	    if (length > 1)
+		insertionsort(A, lo, hi);
 	    return;
 	}
 
@@ -109,7 +106,8 @@ public class Quicksort {
     public static void quicksort3Pivot(int[] A, int lo, int hi) {
 	int length = hi - lo + 1;
 	if (length < INSERTION_SORT_THRESHOLD) {
-	    insertionsort(A, lo, hi);
+	    if (length > 1)
+		insertionsort(A, lo, hi);
 	    return;
 	}
 
