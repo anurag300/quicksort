@@ -20,6 +20,35 @@ public class Quicksort {
         }
     }
 
+    // for reference
+    public static void quicksort1Pivot(int[] A, int lo, int hi) {
+	int length = hi - lo + 1;
+	if (length < INSERTION_SORT_THRESHOLD) {
+	    if (length > 1)
+		insertionsort(A, lo, hi);
+	    return;
+	}
+	int midpoint = (lo + hi) >>> 1;
+	swap(A, lo, midpoint);
+	
+	int p = A[lo];
+	int i = lo+1;
+	int j = hi;
+	while (i <= j) {
+	    while (A[i] < p && i <= j) i++;
+	    while (A[j] > p && i <= j) j--;
+	    if (i <= j) {
+		swap(A, i, j);
+		i++; j--;
+	    }
+	}
+	i--; j++;
+	swap(A, i, lo);
+	
+	quicksort1Pivot(A, lo, i-1);
+	quicksort1Pivot(A, i+1, hi);
+    }
+    
     /**
      * Naive choice of pivots p,q,r as a[lo], a[midpoint] & a[hi] elements.
      */
@@ -247,8 +276,8 @@ public class Quicksort {
 	}
 
 	long start = System.currentTimeMillis();
+	//quicksort1Pivot(a, 0, a.length - 1);
 	quicksort3PivotBasic(a, 0, a.length - 1);
-	//quicksort3Pivot(a, 0, a.length - 1);
 	//Arrays.sort(a); // uncomment to compare against your JDK
 	long stop = System.currentTimeMillis();
 	java.text.NumberFormat f = java.text.NumberFormat.getNumberInstance(java.util.Locale.US);
